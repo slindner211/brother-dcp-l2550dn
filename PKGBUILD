@@ -23,8 +23,13 @@ prepare() {
 }
 
 package() {
+	cp -R ${srcdir}/opt ${pkgdir}
+	rm ${pkgdir}/opt/brother/Printers/DCPL2550DN/cupswrapper/Copying
 	install -Dm644 eula.txt ${pkgdir}/usr/share/licenses/${pkgname}/eula.txt
 	ln -s /usr/share/licenses/GPL2/license.txt ${pkgdir}/usr/share/licenses/${pkgname}/cupswrapper-license.txt
-	install -Dm755 ./opt/brother/Printers/DCPL2550DN/cupswrapper/brother-DCPL2550DN-cups-en.ppd ${pkgdir}/usr/share/cups/model/brother-DCPL2550DN-cups-en.ppd
-	install -Dm755 ./opt/brother/Printers/DCPL2550DN/cupswrapper/lpdwrapper ${pkgdir}/usr/lib/cups/filter/brother_lpdwrapper_DCPL2550DN
+	install -dm755 ${pkgdir}/usr/share/cups/model
+	ln -s /opt/brother/Printers/DCPL2550DN/cupswrapper/brother-DCPL2550DN-cups-en.ppd ${pkgdir}/usr/share/cups/model/brother-DCPL2550DN-cups-en.ppd
+	install -dm755 ${pkgdir}/usr/lib/cups/filter
+	ln -s /opt/brother/Printers/DCPL2550DN/cupswrapper/lpdwrapper ${pkgdir}/usr/lib/cups/filter/brother_lpdwrapper_DCPL2550DN
+	rm -r ${pkgdir}/opt/brother/Printers/DCPL2550DN/lpd/armv7l
 }
